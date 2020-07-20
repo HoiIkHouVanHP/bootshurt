@@ -29,6 +29,16 @@ namespace Hitlurt
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn
+        (
+            int nLeftRect,     // x-coordinate of upper-left corner
+            int nTopRect,      // y-coordinate of upper-left corner
+            int nRightRect,    // x-coordinate of lower-right corner
+            int nBottomRect,   // y-coordinate of lower-right corner
+            int nWidthEllipse, // width of ellipse
+            int nHeightEllipse // height of ellipse
+        );
 
         private void Form1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -41,29 +51,9 @@ namespace Hitlurt
         public Form1()
         {
             
-            var webClient = new WebClient();
-            webClient.Headers["User-Agent"] =
-                           "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36";
-            if (File.Exists("FastColoredTextBox.dll"))
-            {
-
-            }
-            else
-            {
-                webClient.DownloadFile("https://srv-file12.gofile.io/download/6y7aOJ/FastColoredTextBox.dll", "FastColoredTextBox.dll");
-            }
-           
-            if (File.Exists("SirHurtAPI.dll"))
-            {
-
-            }
-            else
-            {
-                webClient.DownloadFile("https://raw.githubusercontent.com/teppyboy/SirHurtAPI/master/SirHurtAPI/SirHurtAPI/SirHurtAPI/bin/Debug/SirHurtAPI.dll", "SirHurtAPI.dll");
-            }
             InitializeComponent();
             Lie();
-            
+            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
 
         }
 
@@ -152,12 +142,8 @@ namespace Hitlurt
                 fastColoredTextBox1.Language = FastColoredTextBoxNS.Language.CSharp;
                 Source = true;
                 var webClient = new WebClient();
-                webClient.DownloadFile("https://srv-file10.gofile.io/download/vDncek/d4r3nqzZ.txt", "d4r3nqzZ.txt");
-                using (StreamReader sr = new StreamReader("d4r3nqzZ.txt"))
-                {
-                    fastColoredTextBox1.Text = sr.ReadToEnd();
-                    sr.Close();
-                }
+                string gay = webClient.DownloadString("https://raw.githubusercontent.com/HoiIkHouVanHP/hitlurt2.0/master/naam.txt");
+                fastColoredTextBox1.Text = gay;
             }
         }
 
